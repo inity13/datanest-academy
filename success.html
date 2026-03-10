@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#e65100">
+  <title>Purchase Complete — Datanest Academy</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .download-card {
+      background: var(--color-card-bg, #1e293b);
+      border: 1px solid var(--color-border, #334155);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+    .download-card h3 { margin: 0 0 0.5rem 0; color: var(--color-text, #f8fafc); }
+    .download-card p { margin: 0 0 1rem 0; color: var(--color-text-muted, #94a3b8); font-size: 0.875rem; }
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .spinner {
+      display: inline-block;
+      width: 24px; height: 24px;
+      border: 3px solid var(--color-border, #334155);
+      border-top-color: #e65100;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 0.5rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .download-meta {
+      font-size: 0.75rem;
+      color: var(--color-text-muted, #64748b);
+      margin-top: 0.75rem;
+    }
+    .error-msg {
+      color: #f87171;
+      background: rgba(248,113,113,0.1);
+      border: 1px solid rgba(248,113,113,0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    .retry-btn {
+      margin-top: 0.5rem;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid var(--color-border, #334155);
+      color: var(--color-text, #f8fafc);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+    }
+    .retry-btn:hover { background: var(--color-card-bg, #1e293b); }
+  </style>
+  <script defer data-domain="inity13.github.io" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+  <main class="status-page">
+    <div class="status-card">
+      <span class="status-icon" aria-hidden="true">&#9989;</span>
+      <h1>Thank You!</h1>
+      <p>Your purchase is complete. Your product files are ready to download.</p>
+
+      <div id="download-section"></div>
+
+      <div class="next-steps">
+        <h2>Getting Started</h2>
+        <ol>
+          <li><strong>Download the files</strong> — Click the download button above.</li>
+          <li><strong>Extract the archive</strong> — Unzip the downloaded package.</li>
+          <li><strong>Read the README</strong> — Each product includes detailed setup instructions.</li>
+          <li><strong>Check manifest.json</strong> — Verify file integrity with included checksums.</li>
+        </ol>
+      </div>
+
+      <div class="status-actions" style="margin-top: 2rem;">
+        <a href="index.html" class="btn btn-secondary">Back to Store</a>
+        <a href="mailto:megafolder122122@hotmail.com" class="btn btn-secondary">Contact Support</a>
+      </div>
+
+      <p style="margin-top: 2rem; font-size: 0.875rem; color: var(--color-text-muted);">
+        A receipt has been sent to your email. Questions? <a href="mailto:megafolder122122@hotmail.com">megafolder122122@hotmail.com</a>
+      </p>
+    </div>
+  </main>
+
+  <script>
+    (function() {
+      var DOWNLOAD_API = 'https://ferovwapilhcpqozqinn.supabase.co/functions/v1/download';
+      var section = document.getElementById('download-section');
+      var params = new URLSearchParams(window.location.search);
+      var sessionId = params.get('session_id');
+      var token = params.get('token');
+
+      // Save/retrieve token from sessionStorage for retries
+      var storageKey = 'dl_token_' + (sessionId || '');
+      if (!token && sessionId) {
+        token = sessionStorage.getItem(storageKey);
+      }
+
+      function showLoading() {
+        section.innerHTML = '<div class="download-card">' +
+          '<div class="spinner"></div>' +
+          '<h3>Preparing Your Download...</h3>' +
+          '<p>Generating a secure download link. This may take a moment.</p>' +
+          '</div>';
+      }
+
+      function showDownload(data) {
+        section.innerHTML = '<div class="download-card">' +
+          '<h3>' + (data.product_name || 'Your Product') + '</h3>' +
+          '<p>Your secure download is ready. Link expires in 15 minutes.</p>' +
+          '<a href="' + data.download_url + '" class="btn btn-primary btn-lg" download="' + data.filename + '">' +
+          'Download ' + data.filename + '</a>' +
+          '<div class="download-meta">' +
+          data.downloads_remaining + ' download' + (data.downloads_remaining !== 1 ? 's' : '') + ' remaining' +
+          '</div></div>';
+        // Cache token for retry
+        if (data.download_token) {
+          sessionStorage.setItem(storageKey, data.download_token);
+          // Update URL so refresh uses token directly (avoids re-consuming session lookup)
+          if (!params.get('token')) {
+            var newUrl = window.location.pathname + '?token=' + data.download_token;
+            window.history.replaceState(null, '', newUrl);
+          }
+        }
+      }
+
+      function showError(msg, canRetry) {
+        section.innerHTML = '<div class="error-msg">' +
+          '<strong>Download Issue</strong><p>' + msg + '</p>' +
+          (canRetry ? '<button class="retry-btn" onclick="window.location.reload()">Try Again</button>' : '') +
+          '</div>';
+      }
+
+      function showExhausted() {
+        section.innerHTML = '<div class="download-card">' +
+          '<h3>Downloads Exhausted</h3>' +
+          '<p>You have used all available downloads for this purchase. ' +
+          'Need help? Contact <a href="mailto:megafolder122122@hotmail.com">megafolder122122@hotmail.com</a></p>' +
+          '</div>';
+      }
+
+      function fetchDownload() {
+        var url;
+        if (token) {
+          url = DOWNLOAD_API + '?token=' + encodeURIComponent(token);
+        } else if (sessionId) {
+          url = DOWNLOAD_API + '?session_id=' + encodeURIComponent(sessionId);
+        } else {
+          showError('No download session found. Check your email for the download link, or contact support.', false);
+          return;
+        }
+
+        showLoading();
+
+        fetch(url)
+          .then(function(res) {
+            return res.json().then(function(data) {
+              return { status: res.status, data: data };
+            });
+          })
+          .then(function(result) {
+            if (result.status === 200) {
+              showDownload(result.data);
+            } else if (result.status === 429) {
+              showExhausted();
+            } else if (result.status === 410) {
+              showError('This download link has expired. Please contact support for a new link.', false);
+            } else if (result.status === 404 && result.data.retry) {
+              // Webhook may not have fired yet — retry in 3 seconds
+              setTimeout(fetchDownload, 3000);
+            } else {
+              showError(result.data.error || 'An unexpected error occurred.', true);
+            }
+          })
+          .catch(function(err) {
+            showError('Network error. Please check your connection and try again.', true);
+          });
+      }
+
+      fetchDownload();
+    })();
+  </script>
+<!-- analytics-start -->
+<script>
+(function(){
+  try{
+    fetch("https://ferovwapilhcpqozqinn.supabase.co/rest/v1/page_views",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","apikey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlcm92d2FwaWxoY3Bxb3pxaW5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMTU3NTYsImV4cCI6MjA4ODU5MTc1Nn0.RhBBxPaAw5Fyzal5m3GY_sdxiIAp_RVJ_ki8CUgPnRY","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlcm92d2FwaWxoY3Bxb3pxaW5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMTU3NTYsImV4cCI6MjA4ODU5MTc1Nn0.RhBBxPaAw5Fyzal5m3GY_sdxiIAp_RVJ_ki8CUgPnRY","Prefer":"return=minimal"},
+      body:JSON.stringify({store_name:"Datanest Academy",page_path:location.pathname,referrer:document.referrer||null,user_agent:navigator.userAgent}),
+      keepalive:true
+    }).catch(function(){});
+  }catch(e){}
+})();
+</script>
+<!-- analytics-end -->
+</body>
+</html>
