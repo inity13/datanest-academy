@@ -93,115 +93,83 @@
 
   <script>
     (function() {
-      var DOWNLOAD_API = 'https://ferovwapilhcpqozqinn.supabase.co/functions/v1/download';
-      var section = document.getElementById('download-section');
+      var products = {
+        'academy-analytics-bundle': { name: 'Academy Analytics Bundle', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/a9be7403-69aa-4a09-966a-b7449e55bafe.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzL2E5YmU3NDAzLTY5YWEtNGEwOS05NjZhLWI3NDQ5ZTU1YmFmZS56aXAiLCJpYXQiOjE3NzMxODA5MjcsImV4cCI6MTgwNDcxNjkyN30.rODWgjSMb1OhwDaGfTEq-vRjSQgoow5lrj7scqOoPkk' },
+        'academy-complete-collection': { name: 'Academy Complete Collection', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/84edf83c-ba2d-402d-b9b4-73432ea68adc.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzg0ZWRmODNjLWJhMmQtNDAyZC1iOWI0LTczNDMyZWE2OGFkYy56aXAiLCJpYXQiOjE3NzMxODA5MjgsImV4cCI6MTgwNDcxNjkyOH0.-bu12fnSqAqw3ch72lTGz7480rE7yRvvTTHzhx6EkGQ' },
+        'academy-data-engineering-bundle': { name: 'Academy Data Engineering Bundle', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/a72d57d4-b7a3-4a3f-b871-ecf0b94525bc.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzL2E3MmQ1N2Q0LWI3YTMtNGEzZi1iODcxLWVjZjBiOTQ1MjViYy56aXAiLCJpYXQiOjE3NzMxODA5MjgsImV4cCI6MTgwNDcxNjkyOH0.Puy85n2ALA9gv5t_bAHwqgvJtL5uAgHjK3gdtIyEscA' },
+        'azure-data-platform-engineering': { name: 'Azure Data Platform Engineering', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/e9764a11-80b0-40e9-8c28-a7ee06cc3639.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzL2U5NzY0YTExLTgwYjAtNDBlOS04YzI4LWE3ZWUwNmNjMzYzOS56aXAiLCJpYXQiOjE3NzMxODA5MjgsImV4cCI6MTgwNDcxNjkyOH0.MotGi8hOVUD9qo2PrkfTP-J8gPh2ZMcZmpx141943oA' },
+        'data-lakehouse-architecture-azure': { name: 'Data Lakehouse Architecture Azure', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/68012908-ccd0-418f-9707-d4783a7eaa53.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzY4MDEyOTA4LWNjZDAtNDE4Zi05NzA3LWQ0NzgzYTdlYWE1My56aXAiLCJpYXQiOjE3NzMxODA5MjksImV4cCI6MTgwNDcxNjkyOX0.NPbgL69mF7Iv61U5NKISwPUbenzAKr-PytYbXXGJcJk' },
+        'databricks-analytics-engineering': { name: 'Databricks Analytics Engineering', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/1d9ef610-84dc-4332-81c9-bbccacbd4df8.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzFkOWVmNjEwLTg0ZGMtNDMzMi04MWM5LWJiY2NhY2JkNGRmOC56aXAiLCJpYXQiOjE3NzMxODA5MjksImV4cCI6MTgwNDcxNjkyOX0.iRfAPFiaoUz9KOT-6KEcL4LyJLz-hVx3VPNAqozIk-g' },
+        'databricks-data-engineering-mastery': { name: 'Databricks Data Engineering Mastery', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/4dcdf708-2a64-4f2e-a070-79a4fb913e73.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzRkY2RmNzA4LTJhNjQtNGYyZS1hMDcwLTc5YTRmYjkxM2U3My56aXAiLCJpYXQiOjE3NzMxODA5MjksImV4cCI6MTgwNDcxNjkyOX0.T0-z6Hr3Tsf0wtyPSGMRGhztNL8H26P5F_gpvqtwbo8' },
+        'mlops-databricks-azure-ml': { name: 'Mlops Databricks Azure Ml', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/730d882c-20d8-4076-8987-ef1360943b51.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzczMGQ4ODJjLTIwZDgtNDA3Ni04OTg3LWVmMTM2MDk0M2I1MS56aXAiLCJpYXQiOjE3NzMxODA5MjksImV4cCI6MTgwNDcxNjkyOX0.CCs2_q9wnt72TwustX2BfBfK_B6sPda3sIaJmv9N-3Q' }
+      };
+
       var params = new URLSearchParams(window.location.search);
-      var sessionId = params.get('session_id');
-      var token = params.get('token');
+      var productSlug = params.get('product');
+      var section = document.getElementById('download-section');
 
-      // Save/retrieve token from sessionStorage for retries
-      var storageKey = 'dl_token_' + (sessionId || '');
-      if (!token && sessionId) {
-        token = sessionStorage.getItem(storageKey);
-      }
-
-      function showLoading() {
+      if (productSlug && products[productSlug]) {
+        var p = products[productSlug];
         section.innerHTML = '<div class="download-card">' +
-          '<div class="spinner"></div>' +
-          '<h3>Preparing Your Download...</h3>' +
-          '<p>Generating a secure download link. This may take a moment.</p>' +
+          '<h3>' + p.name + '</h3>' +
+          '<a href="' + p.url + '" class="btn btn-primary btn-lg" download>Download ' + p.name + '</a>' +
           '</div>';
-      }
-
-      function showDownload(data) {
-        section.innerHTML = '<div class="download-card">' +
-          '<h3>' + (data.product_name || 'Your Product') + '</h3>' +
-          '<p>Your secure download is ready. Link expires in 15 minutes.</p>' +
-          '<a href="' + data.download_url + '" class="btn btn-primary btn-lg" download="' + data.filename + '">' +
-          'Download ' + data.filename + '</a>' +
-          '<div class="download-meta">' +
-          data.downloads_remaining + ' download' + (data.downloads_remaining !== 1 ? 's' : '') + ' remaining' +
-          '</div></div>';
-        // Cache token for retry
-        if (data.download_token) {
-          sessionStorage.setItem(storageKey, data.download_token);
-          // Update URL so refresh uses token directly (avoids re-consuming session lookup)
-          if (!params.get('token')) {
-            var newUrl = window.location.pathname + '?token=' + data.download_token;
-            window.history.replaceState(null, '', newUrl);
-          }
+      } else {
+        var html = '<p style="margin-bottom:1rem;">Select your purchased product to download:</p>';
+        html += '<div class="download-grid">';
+        var keys = Object.keys(products);
+        for (var i = 0; i < keys.length; i++) {
+          var prod = products[keys[i]];
+          html += '<div class="download-card">' +
+            '<h3>' + prod.name + '</h3>' +
+            '<a href="' + prod.url + '" class="btn btn-primary btn-sm" download>Download</a>' +
+            '</div>';
         }
+        html += '</div>';
+        section.innerHTML = html;
       }
-
-      function showError(msg, canRetry) {
-        section.innerHTML = '<div class="error-msg">' +
-          '<strong>Download Issue</strong><p>' + msg + '</p>' +
-          (canRetry ? '<button class="retry-btn" onclick="window.location.reload()">Try Again</button>' : '') +
-          '</div>';
-      }
-
-      function showExhausted() {
-        section.innerHTML = '<div class="download-card">' +
-          '<h3>Downloads Exhausted</h3>' +
-          '<p>You have used all available downloads for this purchase. ' +
-          'Need help? Contact <a href="mailto:megafolder122122@hotmail.com">megafolder122122@hotmail.com</a></p>' +
-          '</div>';
-      }
-
-      function fetchDownload() {
-        var url;
-        if (token) {
-          url = DOWNLOAD_API + '?token=' + encodeURIComponent(token);
-        } else if (sessionId) {
-          url = DOWNLOAD_API + '?session_id=' + encodeURIComponent(sessionId);
-        } else {
-          showError('No download session found. Check your email for the download link, or contact support.', false);
-          return;
-        }
-
-        showLoading();
-
-        fetch(url)
-          .then(function(res) {
-            return res.json().then(function(data) {
-              return { status: res.status, data: data };
-            });
-          })
-          .then(function(result) {
-            if (result.status === 200) {
-              showDownload(result.data);
-            } else if (result.status === 429) {
-              showExhausted();
-            } else if (result.status === 410) {
-              showError('This download link has expired. Please contact support for a new link.', false);
-            } else if (result.status === 404 && result.data.retry) {
-              // Webhook may not have fired yet — retry in 3 seconds
-              setTimeout(fetchDownload, 3000);
-            } else {
-              showError(result.data.error || 'An unexpected error occurred.', true);
-            }
-          })
-          .catch(function(err) {
-            showError('Network error. Please check your connection and try again.', true);
-          });
-      }
-
-      fetchDownload();
     })();
   </script>
 <!-- analytics-start -->
 <script>
-(function(){
-  try{
-    fetch("https://ferovwapilhcpqozqinn.supabase.co/rest/v1/page_views",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","apikey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlcm92d2FwaWxoY3Bxb3pxaW5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMTU3NTYsImV4cCI6MjA4ODU5MTc1Nn0.RhBBxPaAw5Fyzal5m3GY_sdxiIAp_RVJ_ki8CUgPnRY","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlcm92d2FwaWxoY3Bxb3pxaW5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMTU3NTYsImV4cCI6MjA4ODU5MTc1Nn0.RhBBxPaAw5Fyzal5m3GY_sdxiIAp_RVJ_ki8CUgPnRY","Prefer":"return=minimal"},
-      body:JSON.stringify({store_name:"Datanest Academy",page_path:location.pathname,referrer:document.referrer||null,user_agent:navigator.userAgent}),
-      keepalive:true
-    }).catch(function(){});
-  }catch(e){}
-})();
-</script>
+    (function() {
+      var products = {
+        'academy-analytics-bundle': { name: 'Academy Analytics Bundle', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/a9be7403-69aa-4a09-966a-b7449e55bafe.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzL2E5YmU3NDAzLTY5YWEtNGEwOS05NjZhLWI3NDQ5ZTU1YmFmZS56aXAiLCJpYXQiOjE3NzMxODA5MjcsImV4cCI6MTgwNDcxNjkyN30.rODWgjSMb1OhwDaGfTEq-vRjSQgoow5lrj7scqOoPkk' },
+        'academy-complete-collection': { name: 'Academy Complete Collection', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/84edf83c-ba2d-402d-b9b4-73432ea68adc.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzg0ZWRmODNjLWJhMmQtNDAyZC1iOWI0LTczNDMyZWE2OGFkYy56aXAiLCJpYXQiOjE3NzMxODA5MjgsImV4cCI6MTgwNDcxNjkyOH0.-bu12fnSqAqw3ch72lTGz7480rE7yRvvTTHzhx6EkGQ' },
+        'academy-data-engineering-bundle': { name: 'Academy Data Engineering Bundle', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/a72d57d4-b7a3-4a3f-b871-ecf0b94525bc.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzL2E3MmQ1N2Q0LWI3YTMtNGEzZi1iODcxLWVjZjBiOTQ1MjViYy56aXAiLCJpYXQiOjE3NzMxODA5MjgsImV4cCI6MTgwNDcxNjkyOH0.Puy85n2ALA9gv5t_bAHwqgvJtL5uAgHjK3gdtIyEscA' },
+        'azure-data-platform-engineering': { name: 'Azure Data Platform Engineering', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/e9764a11-80b0-40e9-8c28-a7ee06cc3639.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzL2U5NzY0YTExLTgwYjAtNDBlOS04YzI4LWE3ZWUwNmNjMzYzOS56aXAiLCJpYXQiOjE3NzMxODA5MjgsImV4cCI6MTgwNDcxNjkyOH0.MotGi8hOVUD9qo2PrkfTP-J8gPh2ZMcZmpx141943oA' },
+        'data-lakehouse-architecture-azure': { name: 'Data Lakehouse Architecture Azure', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/68012908-ccd0-418f-9707-d4783a7eaa53.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzY4MDEyOTA4LWNjZDAtNDE4Zi05NzA3LWQ0NzgzYTdlYWE1My56aXAiLCJpYXQiOjE3NzMxODA5MjksImV4cCI6MTgwNDcxNjkyOX0.NPbgL69mF7Iv61U5NKISwPUbenzAKr-PytYbXXGJcJk' },
+        'databricks-analytics-engineering': { name: 'Databricks Analytics Engineering', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/1d9ef610-84dc-4332-81c9-bbccacbd4df8.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzFkOWVmNjEwLTg0ZGMtNDMzMi04MWM5LWJiY2NhY2JkNGRmOC56aXAiLCJpYXQiOjE3NzMxODA5MjksImV4cCI6MTgwNDcxNjkyOX0.iRfAPFiaoUz9KOT-6KEcL4LyJLz-hVx3VPNAqozIk-g' },
+        'databricks-data-engineering-mastery': { name: 'Databricks Data Engineering Mastery', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/4dcdf708-2a64-4f2e-a070-79a4fb913e73.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzRkY2RmNzA4LTJhNjQtNGYyZS1hMDcwLTc5YTRmYjkxM2U3My56aXAiLCJpYXQiOjE3NzMxODA5MjksImV4cCI6MTgwNDcxNjkyOX0.T0-z6Hr3Tsf0wtyPSGMRGhztNL8H26P5F_gpvqtwbo8' },
+        'mlops-databricks-azure-ml': { name: 'Mlops Databricks Azure Ml', url: 'https://ferovwapilhcpqozqinn.supabase.co/storage/v1/object/sign/digital-products/730d882c-20d8-4076-8987-ef1360943b51.zip?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMzhhMmQ5NC1iYTI5LTQyNDAtYjUxMy1jZWVkZTAyNzllYzgiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJkaWdpdGFsLXByb2R1Y3RzLzczMGQ4ODJjLTIwZDgtNDA3Ni04OTg3LWVmMTM2MDk0M2I1MS56aXAiLCJpYXQiOjE3NzMxODA5MjksImV4cCI6MTgwNDcxNjkyOX0.CCs2_q9wnt72TwustX2BfBfK_B6sPda3sIaJmv9N-3Q' }
+      };
+
+      var params = new URLSearchParams(window.location.search);
+      var productSlug = params.get('product');
+      var section = document.getElementById('download-section');
+
+      if (productSlug && products[productSlug]) {
+        var p = products[productSlug];
+        section.innerHTML = '<div class="download-card">' +
+          '<h3>' + p.name + '</h3>' +
+          '<a href="' + p.url + '" class="btn btn-primary btn-lg" download>Download ' + p.name + '</a>' +
+          '</div>';
+      } else {
+        var html = '<p style="margin-bottom:1rem;">Select your purchased product to download:</p>';
+        html += '<div class="download-grid">';
+        var keys = Object.keys(products);
+        for (var i = 0; i < keys.length; i++) {
+          var prod = products[keys[i]];
+          html += '<div class="download-card">' +
+            '<h3>' + prod.name + '</h3>' +
+            '<a href="' + prod.url + '" class="btn btn-primary btn-sm" download>Download</a>' +
+            '</div>';
+        }
+        html += '</div>';
+        section.innerHTML = html;
+      }
+    })();
+  </script>
 <!-- analytics-end -->
 </body>
 </html>
