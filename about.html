@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="About Datanest Academy. Role-based Databricks & Azure courses — from foundations to production mastery.">
+  <meta name="author" content="Jesse Mikkola">
+  <meta name="theme-color" content="#e65100">
+  <link rel="canonical" href="https://inity13.github.io/datanest-academy/about.html">
+  <title>About — Datanest Academy</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .about-page { padding-top: calc(var(--header-height) + var(--space-12)); }
+    .about-card {
+      background: var(--color-card);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      max-width: 720px;
+      margin: 0 auto var(--space-8);
+    }
+    @media (min-width: 640px) { .about-card { padding: var(--space-12); } }
+    .author-header { display: flex; align-items: center; gap: var(--space-6); margin-bottom: var(--space-6); }
+    .author-avatar {
+      width: 80px; height: 80px; border-radius: 50%; flex-shrink: 0;
+      background: var(--gradient-primary); display: flex; align-items: center; justify-content: center;
+    }
+    .author-avatar svg { width: 44px; height: 44px; stroke: white; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .author-name { font-size: var(--text-2xl); font-weight: 700; color: var(--color-text-heading); margin-bottom: var(--space-1); }
+    .author-role { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .about-card h2 { font-size: var(--text-xl); margin-bottom: var(--space-3); }
+    .about-card p { margin-bottom: var(--space-4); font-size: var(--text-sm); line-height: 1.7; }
+    .about-card ul { margin-bottom: var(--space-4); }
+    .about-card li {
+      display: flex; align-items: flex-start; gap: var(--space-3);
+      font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-2);
+    }
+    .about-card li .check { color: var(--color-accent); font-weight: 700; flex-shrink: 0; }
+    .about-cta { text-align: center; margin-top: var(--space-8); }
+    .contact-line { text-align: center; font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-6); }
+    .contact-line a { color: var(--color-primary-light); }
+    .back-link { display: inline-block; margin-bottom: var(--space-6); font-size: var(--text-sm); color: var(--color-text-muted); }
+    .back-link:hover { color: var(--color-text); }
+  </style>
+  <script defer data-domain="inity13.github.io" src="https://plausible.io/js/script.js"></script>
+</head>
+<body>
+  <main class="about-page">
+    <div class="container">
+      <a href="index.html" class="back-link">&larr; Back to Store</a>
+      <div class="about-card">
+        <div class="author-header">
+          <div class="author-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          </div>
+          <div>
+            <div class="author-name">Jesse Mikkola</div>
+            <div class="author-role">Software Engineer</div>
+          </div>
+        </div>
+
+        <p>Datanest Academy packages the patterns, tools, and frameworks I use in professional environments into products you can deploy immediately.</p>
+
+        <p>Every product comes from solving real problems in production. Nothing is theoretical — if it's in the store, it has been used in real-world projects.</p>
+
+        <h2>Why Datanest Academy?</h2>
+        <ul>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Built from real production implementations, not tutorials</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> All code is original, documented, and tested</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Practical and deployable — saves you weeks of work</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> MIT licensed for use in commercial projects</li>
+          <li><span class="check" aria-hidden="true">&#10003;</span> Direct support from the author via email</li>
+        </ul>
+
+        <h2>What You Get</h2>
+        <p>Each product includes source code, configuration templates, detailed documentation, and a README with setup instructions. Products are packaged as ZIP archives and delivered instantly after purchase via secure Stripe checkout.</p>
+
+        <p>If something doesn't work as described, email me directly. I respond within 24 hours.</p>
+
+        <div class="about-cta">
+          <a href="index.html#products" class="btn btn-primary btn-lg">Browse Products</a>
+          <a href="index.html#bundle" class="btn btn-secondary btn-lg" style="margin-left: var(--space-3);">Get the Bundle</a>
+        </div>
+
+        <p class="contact-line">
+          Questions? <a href="mailto:megafolder122122@hotmail.com">megafolder122122@hotmail.com</a>
+        </p>
+      </div>
+    </div>
+  </main>
+  <script src="script.js"></script>
+<!-- analytics-start -->
+<script>
+(function(){
+  try{
+    fetch("https://ferovwapilhcpqozqinn.supabase.co/rest/v1/page_views",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","apikey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlcm92d2FwaWxoY3Bxb3pxaW5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMTU3NTYsImV4cCI6MjA4ODU5MTc1Nn0.RhBBxPaAw5Fyzal5m3GY_sdxiIAp_RVJ_ki8CUgPnRY","Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlcm92d2FwaWxoY3Bxb3pxaW5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwMTU3NTYsImV4cCI6MjA4ODU5MTc1Nn0.RhBBxPaAw5Fyzal5m3GY_sdxiIAp_RVJ_ki8CUgPnRY","Prefer":"return=minimal"},
+      body:JSON.stringify({store_name:"Datanest Academy",page_path:location.pathname,referrer:document.referrer||null,user_agent:navigator.userAgent}),
+      keepalive:true
+    }).catch(function(){});
+  }catch(e){}
+})();
+</script>
+<!-- analytics-end -->
+</body>
+</html>
