@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="50%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e65100"/>
+      <stop offset="100%" style="stop-color:#ff8a50"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
+  <rect x="80" y="520" width="200" height="4" rx="2" fill="#e65100" opacity="0.5"/>
+  <text x="80" y="200" font-family="system-ui,-apple-system,sans-serif" font-size="64" font-weight="800" fill="#f8fafc">Datanest Academy</text>
+  <text x="80" y="280" font-family="system-ui,-apple-system,sans-serif" font-size="28" fill="#94a3b8">Role-based Databricks & Azure courses — from foundations to production mastery</text>
+  <text x="80" y="380" font-family="system-ui,-apple-system,sans-serif" font-size="22" fill="#ff8a50">5 production-ready products &middot; MIT licensed</text>
+  <text x="80" y="430" font-family="system-ui,-apple-system,sans-serif" font-size="20" fill="#64748b">Instant download &middot; Stripe checkout &middot; 30-day guarantee</text>
+  <rect x="80" y="480" width="220" height="50" rx="8" fill="#e65100"/>
+  <text x="190" y="512" font-family="system-ui,-apple-system,sans-serif" font-size="18" font-weight="600" fill="#ffffff" text-anchor="middle">Browse Products</text>
+  <text x="1120" y="580" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="#475569" text-anchor="end">datanest.dev</text>
+</svg>
