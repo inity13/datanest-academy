@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://inity13.github.io/datanest-academy/sitemap.xml
