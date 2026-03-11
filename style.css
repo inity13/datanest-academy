@@ -1678,6 +1678,54 @@ pre code {
 }
 
 /* ==========================================================================
+   Crypto Payment Buttons
+   ========================================================================== */
+.crypto-row {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+.crypto-pay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background: linear-gradient(135deg, #f7931a 0%, #e8850f 50%, #d4790a 100%);
+  color: #ffffff;
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 700;
+  padding: 0.4rem 0.85rem;
+  border: none;
+  border-radius: var(--radius-full, 9999px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.crypto-pay-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(247, 147, 26, 0.4);
+  filter: brightness(1.1);
+}
+
+.crypto-pay-btn:active {
+  transform: translateY(0);
+}
+
+.crypto-pay-btn-bundle {
+  font-size: var(--text-sm, 0.875rem);
+  padding: 0.6rem 1.25rem;
+}
+
+.preview-actions .crypto-pay-btn {
+  font-size: var(--text-sm, 0.875rem);
+  padding: 0.6rem 1.25rem;
+}
+
+/* ==========================================================================
    Reduced Motion
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
